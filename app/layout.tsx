@@ -1,11 +1,14 @@
 import "./globals.css"
+// import NProgress from "nprogress"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 
 import Page from "@/components/page"
 import StyledComponentsRegistry from "@/lib/registry"
+import Providers from "@/lib/Providers"
 
-const inter = Inter({ subsets: ["latin"] })
+// Router.events.on("routeChangeStart", () => NProgress.start())
+// Router.events.on("routeChangeComplete", () => NProgress.done())
+// Router.events.on("routeChangeError", () => NProgress.done())
 
 export const metadata: Metadata = {
 	title: "ecom",
@@ -20,9 +23,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<StyledComponentsRegistry>
-					<Page>{children}</Page>
-				</StyledComponentsRegistry>
+				<Providers>
+					<StyledComponentsRegistry>
+						<Page>{children}</Page>
+					</StyledComponentsRegistry>
+				</Providers>
 			</body>
 		</html>
 	)
