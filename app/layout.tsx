@@ -1,14 +1,9 @@
 import "./globals.css"
-// import NProgress from "nprogress"
 import type { Metadata } from "next"
 
 import Page from "@/components/page"
-import StyledComponentsRegistry from "@/lib/registry"
 import Providers from "@/lib/Providers"
-
-// Router.events.on("routeChangeStart", () => NProgress.start())
-// Router.events.on("routeChangeComplete", () => NProgress.done())
-// Router.events.on("routeChangeError", () => NProgress.done())
+import StyledComponentsRegistry from "@/lib/registry"
 
 export const metadata: Metadata = {
 	title: "ecom",
