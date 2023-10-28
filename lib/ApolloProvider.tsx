@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react"
 import { ApolloLink } from "@apollo/client"
+import { onError } from "@apollo/client/link/error"
 import {
 	ApolloNextAppProvider,
 	NextSSRInMemoryCache,
@@ -40,6 +41,18 @@ function makeClient(headers: any, initialState: any) {
 								stripDefer: true,
 							}),
 							httpLink,
+							onError(({ graphQLErrors, networkError }) => {
+								if (graphQLErrors)
+									graphQLErrors.forEach(({ message, locations, path }) =>
+										console.log(
+											`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+										)
+									)
+								if (networkError)
+									console.log(
+										`[Network error]: ${networkError}. Backend is unreachable. Is it running?`
+									)
+							}),
 					  ])
 					: httpLink,
 		})

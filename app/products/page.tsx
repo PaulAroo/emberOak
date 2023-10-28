@@ -11,7 +11,9 @@ const query = gql`
 
 export default function ProductsPage() {
 	const { data, client } = useSuspenseQuery(query)
+	const data_untyped = data as any
+	// TODO figure out a way to make sure returned data is typed
 
 	console.log({ client, data })
-	return <div>products!!</div>
+	return <div> {data_untyped.productsCount} products!!</div>
 }
