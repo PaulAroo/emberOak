@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 
 import Page from "@/components/page"
 import Providers from "@/lib/Providers"
+import ApolloWrapper from "@/lib/ApolloProvider"
 import StyledComponentsRegistry from "@/lib/registry"
 
 export const metadata: Metadata = {
@@ -18,11 +19,13 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<Providers>
-					<StyledComponentsRegistry>
-						<Page>{children}</Page>
-					</StyledComponentsRegistry>
-				</Providers>
+				<ApolloWrapper>
+					<Providers>
+						<StyledComponentsRegistry>
+							<Page>{children}</Page>
+						</StyledComponentsRegistry>
+					</Providers>
+				</ApolloWrapper>
 			</body>
 		</html>
 	)

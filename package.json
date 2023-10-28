@@ -9,6 +9,8 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@apollo/client": "^3.8.6",
+		"@apollo/experimental-nextjs-app-support": "^0.4.3",
 		"next": "13.5.4",
 		"next-nprogress-bar": "^2.1.2",
 		"react": "^18",
