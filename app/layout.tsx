@@ -19,7 +19,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<ApolloWrapper>
+				<ApolloWrapper headers={{}} initialState={{}}>
 					<Providers>
 						<StyledComponentsRegistry>
 							<Page>{children}</Page>
