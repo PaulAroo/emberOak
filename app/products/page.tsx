@@ -1,19 +1,15 @@
 "use client"
 
-import { gql } from "@apollo/client"
+import { gql } from "@/__generated__/gql"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
-const query = gql`
-	query {
-		productsCount
-	}
-`
+const GET_PRODUCTS_COUNT = gql(`
+		query GetProductsCount {
+			productsCount
+		}
+	`)
 
 export default function ProductsPage() {
-	const { data, client } = useSuspenseQuery(query)
-	const data_untyped = data as any
-	// TODO figure out a way to make sure returned data is typed
-
-	console.log({ client, data })
-	return <div> {data_untyped.productsCount} products!!</div>
+	const { data } = useSuspenseQuery(GET_PRODUCTS_COUNT)
+	return <div> {data.productsCount} products!!</div>
 }
