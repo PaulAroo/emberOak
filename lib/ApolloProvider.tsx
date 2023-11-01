@@ -27,6 +27,7 @@ function makeClient(headers: any, initialState: any) {
 		})
 
 		return new NextSSRApolloClient({
+			connectToDevTools: true,
 			cache: new NextSSRInMemoryCache({
 				typePolicies: {
 					Query: {
@@ -40,7 +41,6 @@ function makeClient(headers: any, initialState: any) {
 							new SSRMultipartLink({
 								stripDefer: true,
 							}),
-							httpLink,
 							onError(({ graphQLErrors, networkError }) => {
 								if (graphQLErrors)
 									graphQLErrors.forEach(({ message, locations, path }) =>
@@ -53,6 +53,7 @@ function makeClient(headers: any, initialState: any) {
 										`[Network error]: ${networkError}. Backend is unreachable. Is it running?`
 									)
 							}),
+							httpLink,
 					  ])
 					: httpLink,
 		})
