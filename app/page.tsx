@@ -1,3 +1,5 @@
+import ProductsPage from "./products/page"
+
 export default function HomePage() {
-	return <div>hello</div>
+	return <ProductsPage />
 }
