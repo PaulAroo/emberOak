@@ -9,7 +9,8 @@ export function formatMoney(amount = 0) {
 		options.minimumFractionDigits = 0
 	}
 
-	const formatter = new Intl.NumberFormat("en-GB", options)
+	const locale = navigator.language
+	const formatter = new Intl.NumberFormat(locale, options)
 
 	return formatter.format(amount / 100)
 }
