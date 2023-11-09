@@ -4,12 +4,12 @@ type FromInputs = {
 	name?: string
 	price?: number
 	description?: string
-	image?: string
+	image?: File
 }
 
-function resetObject<Obj extends Record<string, string | number | boolean>>(
-	obj: Obj
-) {
+function resetObject<
+	Obj extends Record<string, string | number | boolean | File>
+>(obj: Obj) {
 	return Object.fromEntries(
 		Object.entries(obj).map(([key, value]) => [
 			key,
@@ -39,6 +39,12 @@ export function useForm(initial: FromInputs) {
 			setInputs({
 				...inputs,
 				price: parseInt(value),
+			})
+		} else if (type === "file") {
+			const [file] = (e.target as HTMLInputElement).files!
+			setInputs({
+				...inputs,
+				image: file,
 			})
 		} else {
 			setInputs({

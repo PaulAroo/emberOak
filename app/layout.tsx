@@ -19,6 +19,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
+				{/* TODO: pass in the right headers */}
 				<ApolloWrapper headers={{}} initialState={{}}>
 					<Providers>
 						<StyledComponentsRegistry>
