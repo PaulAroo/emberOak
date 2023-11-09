@@ -1,21 +1,49 @@
 "use client"
 
+import { gql, useMutation } from "@apollo/client"
+
 import { useForm } from "@/utils/hooks/useForm"
 
 import FormStyles from "./styles/FormStyles"
 
+const CREATE_NEW_PRODUCT = gql`
+	mutation GET_ALL_PRODUCTS(
+		$name: String!
+		$description: String!
+		$price: Int!
+		$image: Upload
+	) {
+		createProduct(
+			data: {
+				name: $name
+				description: $description
+				price: $price
+				status: "AVAILABLE"
+				photo: { create: { image: $image, altText: $name } }
+			}
+		) {
+			id
+			name
+			price
+		}
+	}
+`
+
 export default function CreateProduct() {
-	const { inputs, handleInputChange } = useForm({
-		name: "thrills",
+	const { inputs, handleInputChange } = useForm({})
+
+	const [createProduct, { loading }] = useMutation(CREATE_NEW_PRODUCT, {
+		variables: inputs,
 	})
 
 	return (
 		<FormStyles
-			onSubmit={(e) => {
+			onSubmit={async (e) => {
 				e.preventDefault()
+				await createProduct()
 			}}
 		>
-			<fieldset>
+			<fieldset disabled={loading} aria-busy={loading}>
 				<label htmlFor="image">
 					Image
 					<input
@@ -24,7 +52,6 @@ export default function CreateProduct() {
 						name="image"
 						id="image"
 						onChange={handleInputChange}
-						value={inputs.image}
 					/>
 				</label>
 				<label htmlFor="name">
@@ -56,7 +83,7 @@ export default function CreateProduct() {
 						onChange={handleInputChange}
 					/>
 				</label>
-				<button>Add product</button>
+				<button type="submit">Add product</button>
 			</fieldset>
 		</FormStyles>
 	)

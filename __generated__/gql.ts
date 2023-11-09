@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n\tquery GetAllProducts {\n  products {\n    id,\n    description,\n    name,\n    status,\n    price\n    photo {\n      id\n      image {\n        publicUrlTransformed\n      }\n    }\n  }\n}\n": types.GetAllProductsDocument,
+    "\n\tmutation GET_ALL_PRODUCTS(\n\t\t$name: String!\n\t\t$description: String!\n\t\t$price: Int!\n\t\t$image: Upload\n\t) {\n\t\tcreateProduct(\n\t\t\tdata: {\n\t\t\t\tname: $name\n\t\t\t\tdescription: $description\n\t\t\t\tprice: $price\n\t\t\t\tstatus: \"AVAILABLE\"\n\t\t\t\tphoto: { create: { image: $image, altText: $name } }\n\t\t\t}\n\t\t) {\n\t\t\tid\n\t\t\tname\n\t\t\tprice\n\t\t}\n\t}\n": types.Get_All_ProductsDocument,
 };
 
 /**
@@ -34,6 +35,10 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n\tquery GetAllProducts {\n  products {\n    id,\n    description,\n    name,\n    status,\n    price\n    photo {\n      id\n      image {\n        publicUrlTransformed\n      }\n    }\n  }\n}\n"): (typeof documents)["\n\tquery GetAllProducts {\n  products {\n    id,\n    description,\n    name,\n    status,\n    price\n    photo {\n      id\n      image {\n        publicUrlTransformed\n      }\n    }\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n\tmutation GET_ALL_PRODUCTS(\n\t\t$name: String!\n\t\t$description: String!\n\t\t$price: Int!\n\t\t$image: Upload\n\t) {\n\t\tcreateProduct(\n\t\t\tdata: {\n\t\t\t\tname: $name\n\t\t\t\tdescription: $description\n\t\t\t\tprice: $price\n\t\t\t\tstatus: \"AVAILABLE\"\n\t\t\t\tphoto: { create: { image: $image, altText: $name } }\n\t\t\t}\n\t\t) {\n\t\t\tid\n\t\t\tname\n\t\t\tprice\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation GET_ALL_PRODUCTS(\n\t\t$name: String!\n\t\t$description: String!\n\t\t$price: Int!\n\t\t$image: Upload\n\t) {\n\t\tcreateProduct(\n\t\t\tdata: {\n\t\t\t\tname: $name\n\t\t\t\tdescription: $description\n\t\t\t\tprice: $price\n\t\t\t\tstatus: \"AVAILABLE\"\n\t\t\t\tphoto: { create: { image: $image, altText: $name } }\n\t\t\t}\n\t\t) {\n\t\t\tid\n\t\t\tname\n\t\t\tprice\n\t\t}\n\t}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
