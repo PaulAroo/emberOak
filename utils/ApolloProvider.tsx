@@ -59,7 +59,6 @@ function makeClient(headers: any, initialState: any) {
 								if (graphQLErrors)
 									graphQLErrors.forEach(({ message, locations, path }) =>
 										console.log(
-											0,
 											`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
 										)
 									)

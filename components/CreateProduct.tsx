@@ -4,6 +4,7 @@ import { gql, useMutation } from "@apollo/client"
 
 import { useForm } from "@/utils/hooks/useForm"
 
+import DisplayError from "./DisplayError"
 import FormStyles from "./styles/FormStyles"
 
 const CREATE_NEW_PRODUCT = gql`
@@ -32,7 +33,7 @@ const CREATE_NEW_PRODUCT = gql`
 export default function CreateProduct() {
 	const { inputs, handleInputChange } = useForm({})
 
-	const [createProduct, { loading }] = useMutation(CREATE_NEW_PRODUCT, {
+	const [createProduct, { loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
 		variables: inputs,
 	})
 
@@ -43,6 +44,7 @@ export default function CreateProduct() {
 				await createProduct()
 			}}
 		>
+			<DisplayError error={error} />
 			<fieldset disabled={loading} aria-busy={loading}>
 				<label htmlFor="image">
 					Image
@@ -57,6 +59,7 @@ export default function CreateProduct() {
 				<label htmlFor="name">
 					Name
 					<input
+						required
 						value={inputs.name ?? ""}
 						type="text"
 						id="name"
@@ -67,6 +70,7 @@ export default function CreateProduct() {
 				<label htmlFor="price">
 					Price
 					<input
+						required
 						value={inputs.price ?? 0}
 						type="number"
 						id="price"
@@ -77,6 +81,7 @@ export default function CreateProduct() {
 				<label htmlFor="description">
 					Description
 					<textarea
+						required
 						name="description"
 						id="description"
 						value={inputs.description}
