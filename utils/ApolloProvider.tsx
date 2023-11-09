@@ -3,6 +3,7 @@
 import { ReactNode } from "react"
 import { ApolloLink } from "@apollo/client"
 import { onError } from "@apollo/client/link/error"
+import { setContext } from "@apollo/client/link/context"
 import {
 	ApolloNextAppProvider,
 	NextSSRInMemoryCache,
@@ -14,17 +15,27 @@ import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 
 import { endpoint, prodEndpoint } from "@/config"
 
+// TODO: add the right types
 function makeClient(headers: any, initialState: any) {
 	const uri = process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 
 	return () => {
-		const httpLink = createUploadLink({
+		const uploadLink = createUploadLink({
 			uri,
 			fetchOptions: {
 				credentials: "include",
 			},
-			headers,
 		})
+
+		const presetHeaderLink = setContext(() => {
+			return {
+				headers: {
+					"apollo-require-preflight": true,
+				},
+			}
+		})
+
+		const httpLink = presetHeaderLink.concat(uploadLink)
 
 		return new NextSSRApolloClient({
 			connectToDevTools: true,
@@ -41,10 +52,14 @@ function makeClient(headers: any, initialState: any) {
 							new SSRMultipartLink({
 								stripDefer: true,
 							}),
+							httpLink,
+					  ])
+					: ApolloLink.from([
 							onError(({ graphQLErrors, networkError }) => {
 								if (graphQLErrors)
 									graphQLErrors.forEach(({ message, locations, path }) =>
 										console.log(
+											0,
 											`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
 										)
 									)
@@ -54,8 +69,7 @@ function makeClient(headers: any, initialState: any) {
 									)
 							}),
 							httpLink,
-					  ])
-					: httpLink,
+					  ]),
 		})
 	}
 }
