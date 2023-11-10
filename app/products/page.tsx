@@ -6,7 +6,7 @@ import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 import { gql } from "@/__generated__/gql"
 import { Product } from "@/components/Product"
 
-const GET_ALL_PRODUCTS = gql(`
+export const ALL_PRODUCTS_QUERY = gql(`
 	query GetAllProducts {
   products {
     id,
@@ -31,7 +31,7 @@ const ProductListStyles = styled.div`
 `
 
 export default function ProductsPage() {
-	const { data } = useSuspenseQuery(GET_ALL_PRODUCTS)
+	const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
 	return (
 		<div>
 			<ProductListStyles>

@@ -1,8 +1,11 @@
 "use client"
 
+import { FormEvent } from "react"
+import { useRouter } from "next/navigation"
 import { gql, useMutation } from "@apollo/client"
 
 import { useForm } from "@/utils/hooks/useForm"
+import { ALL_PRODUCTS_QUERY } from "@/app/products/page"
 
 import DisplayError from "./DisplayError"
 import FormStyles from "./styles/FormStyles"
@@ -31,19 +34,23 @@ const CREATE_NEW_PRODUCT = gql`
 `
 
 export default function CreateProduct() {
-	const { inputs, handleInputChange } = useForm({})
+	const router = useRouter()
+	const { inputs, handleInputChange, clearFormInputs } = useForm({})
 
 	const [createProduct, { loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
 		variables: inputs,
+		refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
 	})
 
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		const { data } = await createProduct()
+		clearFormInputs()
+		router.push(`/product/${data.createProduct.id}`)
+	}
+
 	return (
-		<FormStyles
-			onSubmit={async (e) => {
-				e.preventDefault()
-				await createProduct()
-			}}
-		>
+		<FormStyles onSubmit={handleSubmit}>
 			<DisplayError error={error} />
 			<fieldset disabled={loading} aria-busy={loading}>
 				<label htmlFor="image">
@@ -59,6 +66,7 @@ export default function CreateProduct() {
 				<label htmlFor="name">
 					Name
 					<input
+						placeholder="Name"
 						required
 						value={inputs.name ?? ""}
 						type="text"
@@ -70,8 +78,9 @@ export default function CreateProduct() {
 				<label htmlFor="price">
 					Price
 					<input
+						placeholder="Price"
 						required
-						value={inputs.price ?? 0}
+						value={inputs.price ?? ""}
 						type="number"
 						id="price"
 						name="price"
@@ -81,6 +90,7 @@ export default function CreateProduct() {
 				<label htmlFor="description">
 					Description
 					<textarea
+						placeholder="description"
 						required
 						name="description"
 						id="description"
