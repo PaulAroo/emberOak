@@ -6,12 +6,13 @@ import { gql, useMutation } from "@apollo/client"
 
 import { useForm } from "@/utils/hooks/useForm"
 import { ALL_PRODUCTS_QUERY } from "@/app/products/page"
+import { CreateSingleProductMutation } from "@/__generated__/graphql"
 
 import DisplayError from "./DisplayError"
 import FormStyles from "./styles/FormStyles"
 
 const CREATE_NEW_PRODUCT = gql`
-	mutation GET_ALL_PRODUCTS(
+	mutation CreateSingleProduct(
 		$name: String!
 		$description: String!
 		$price: Int!
@@ -37,16 +38,17 @@ export default function CreateProduct() {
 	const router = useRouter()
 	const { inputs, handleInputChange, clearFormInputs } = useForm({})
 
-	const [createProduct, { loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
-		variables: inputs,
-		refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
-	})
+	const [createProduct, { loading, error }] =
+		useMutation<CreateSingleProductMutation>(CREATE_NEW_PRODUCT, {
+			variables: inputs,
+			refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+		})
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const { data } = await createProduct()
 		clearFormInputs()
-		router.push(`/product/${data.createProduct.id}`)
+		router.push(`/product/${data?.createProduct?.id}`)
 	}
 
 	return (
