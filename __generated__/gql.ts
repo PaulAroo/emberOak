@@ -13,7 +13,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n\tquery GetAllProducts {\n\t\tproducts {\n\t\t\tid\n\t\t\tdescription\n\t\t\tname\n\t\t\tstatus\n\t\t\tprice\n\t\t\tphoto {\n\t\t\t\tid\n\t\t\t\timage {\n\t\t\t\t\tpublicUrlTransformed\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetAllProductsDocument,
+    "\n\tfragment ProductItem on Product {\n\t\tid\n\t\tdescription\n\t\tname\n\t\tstatus\n\t\tprice\n\t\tphoto {\n\t\t\tid\n\t\t\taltText\n\t\t\timage {\n\t\t\t\tpublicUrlTransformed\n\t\t\t}\n\t\t}\n\t}\n": types.ProductItemFragmentDoc,
+    "\n\tquery GetAllProducts {\n\t\tproducts {\n\t\t\t...ProductItem\n\t\t}\n\t}\n": types.GetAllProductsDocument,
     "\n\tmutation CreateSingleProduct(\n\t\t$name: String!\n\t\t$description: String!\n\t\t$price: Int!\n\t\t$image: Upload\n\t) {\n\t\tcreateProduct(\n\t\t\tdata: {\n\t\t\t\tname: $name\n\t\t\t\tdescription: $description\n\t\t\t\tprice: $price\n\t\t\t\tstatus: \"AVAILABLE\"\n\t\t\t\tphoto: { create: { image: $image, altText: $name } }\n\t\t\t}\n\t\t) {\n\t\t\tid\n\t\t\tname\n\t\t\tprice\n\t\t}\n\t}\n": types.CreateSingleProductDocument,
 };
 
@@ -34,7 +35,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\tquery GetAllProducts {\n\t\tproducts {\n\t\t\tid\n\t\t\tdescription\n\t\t\tname\n\t\t\tstatus\n\t\t\tprice\n\t\t\tphoto {\n\t\t\t\tid\n\t\t\t\timage {\n\t\t\t\t\tpublicUrlTransformed\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllProducts {\n\t\tproducts {\n\t\t\tid\n\t\t\tdescription\n\t\t\tname\n\t\t\tstatus\n\t\t\tprice\n\t\t\tphoto {\n\t\t\t\tid\n\t\t\t\timage {\n\t\t\t\t\tpublicUrlTransformed\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
+export function graphql(source: "\n\tfragment ProductItem on Product {\n\t\tid\n\t\tdescription\n\t\tname\n\t\tstatus\n\t\tprice\n\t\tphoto {\n\t\t\tid\n\t\t\taltText\n\t\t\timage {\n\t\t\t\tpublicUrlTransformed\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tfragment ProductItem on Product {\n\t\tid\n\t\tdescription\n\t\tname\n\t\tstatus\n\t\tprice\n\t\tphoto {\n\t\t\tid\n\t\t\taltText\n\t\t\timage {\n\t\t\t\tpublicUrlTransformed\n\t\t\t}\n\t\t}\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery GetAllProducts {\n\t\tproducts {\n\t\t\t...ProductItem\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetAllProducts {\n\t\tproducts {\n\t\t\t...ProductItem\n\t\t}\n\t}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,12 +1,13 @@
+import Link from "next/link"
+
 import Title from "./styles/Title"
 import PriceTag from "./styles/PriceTag"
 import ItemStyles from "./styles/ItemStyles"
 
-import type { Product } from "@/__generated__/graphql"
-import Link from "next/link"
 import { formatMoney } from "@/utils/formatMoney"
+import type { ProductItemFragment } from "@/__generated__/graphql"
 
-export function Product({ product }: { product: Product }) {
+export function Product({ product }: { product: ProductItemFragment }) {
 	return (
 		<ItemStyles>
 			<img

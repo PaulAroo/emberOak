@@ -7,6 +7,9 @@ const config: CodegenConfig = {
 	generates: {
 		"./__generated__/": {
 			preset: "client",
+			presetConfig: {
+				fragmentMasking: { unmaskFunctionName: "getFragmentData" },
+			},
 			config: {
 				strictScalars: true,
 				useTypeImports: true,
