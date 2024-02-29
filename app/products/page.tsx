@@ -4,32 +4,43 @@ import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
 import { Product } from "@/components/Product"
-import { getFragmentData, graphql } from "@/__generated__"
+import { graphql } from "@/__generated__"
 
-export const ProductFragment = graphql(`
-	fragment ProductItem on Product {
-		id
-		description
-		name
-		status
-		price
-		photo {
-			id
-			altText
-			image {
-				publicUrlTransformed
-			}
-		}
-	}
-`)
+// const ProductFragment = graphql(`
+// 	fragment ProductItem on Product {
+// 		id
+// 		description
+// 		name
+// 		status
+// 		price
+// 		photo {
+// 			id
+// 			altText
+// 			image {
+// 				publicUrlTransformed
+// 			}
+// 		}
+// 	}
+// `)
 
-export const ALL_PRODUCTS_QUERY = graphql(`
-	query GetAllProducts {
-		products {
-			...ProductItem
-		}
-	}
-`)
+// const ALL_PRODUCTS_QUERY = graphql(`
+// 	query GetAllProducts {
+// 		products {
+// 			id
+// 			description
+// 			name
+// 			status
+// 			price
+// 			photo {
+// 				id
+// 				altText
+// 				image {
+// 					publicUrlTransformed
+// 				}
+// 			}
+// 		}
+// 	}
+// `)
 
 const ProductListStyles = styled.div`
 	display: grid;
@@ -38,16 +49,17 @@ const ProductListStyles = styled.div`
 `
 
 export default function ProductsPage() {
-	const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
-	const products = getFragmentData(ProductFragment, data.products)
+	// const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
+	// const products = getFragmentData(ProductFragment, data.products)
 
 	return (
 		<div>
-			<ProductListStyles>
-				{products?.map((product) => (
+			products
+			{/* <ProductListStyles>
+				{data.products?.map((product) => (
 					<Product key={product.id} product={product} />
 				))}
-			</ProductListStyles>
+			</ProductListStyles> */}
 		</div>
 	)
 }
