@@ -3,10 +3,10 @@
 import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
+import { graphql } from "@/graphql"
 import { Product } from "@/components/Product"
-import { gql } from "@apollo/client"
 
-const ALL_PRODUCTS_QUERY = gql(`
+const ALL_PRODUCTS_QUERY = graphql(`
 	query GetAllProducts {
 		products {
 			id
@@ -32,16 +32,18 @@ const ProductListStyles = styled.div`
 `
 
 export default function ProductsPage() {
-	// const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
+	const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
 
 	return (
 		<div>
 			products
-			{/* <ProductListStyles>
-				{x.products?.map((product) => (
-					<Product key={product.id} product={product} />
-				))}
-			</ProductListStyles> */}
+			{
+				<ProductListStyles>
+					{data.products?.map((product) => (
+						<Product key={product.id} product={product} />
+					))}
+				</ProductListStyles>
+			}
 		</div>
 	)
 }
