@@ -4,43 +4,26 @@ import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
 import { Product } from "@/components/Product"
-import { graphql } from "@/__generated__"
+import { gql } from "@apollo/client"
 
-// const ProductFragment = graphql(`
-// 	fragment ProductItem on Product {
-// 		id
-// 		description
-// 		name
-// 		status
-// 		price
-// 		photo {
-// 			id
-// 			altText
-// 			image {
-// 				publicUrlTransformed
-// 			}
-// 		}
-// 	}
-// `)
-
-// const ALL_PRODUCTS_QUERY = graphql(`
-// 	query GetAllProducts {
-// 		products {
-// 			id
-// 			description
-// 			name
-// 			status
-// 			price
-// 			photo {
-// 				id
-// 				altText
-// 				image {
-// 					publicUrlTransformed
-// 				}
-// 			}
-// 		}
-// 	}
-// `)
+const ALL_PRODUCTS_QUERY = gql(`
+	query GetAllProducts {
+		products {
+			id
+			description
+			name
+			status
+			price
+			photo {
+				id
+				altText
+				image {
+					publicUrlTransformed
+				}
+			}
+		}
+	}
+`)
 
 const ProductListStyles = styled.div`
 	display: grid;
@@ -50,13 +33,12 @@ const ProductListStyles = styled.div`
 
 export default function ProductsPage() {
 	// const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
-	// const products = getFragmentData(ProductFragment, data.products)
 
 	return (
 		<div>
 			products
 			{/* <ProductListStyles>
-				{data.products?.map((product) => (
+				{x.products?.map((product) => (
 					<Product key={product.id} product={product} />
 				))}
 			</ProductListStyles> */}
