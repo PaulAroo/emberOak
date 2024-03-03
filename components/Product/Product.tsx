@@ -1,13 +1,20 @@
 import Link from "next/link"
+import { FragmentOf, readFragment } from "gql.tada"
 
-import Title from "./styles/Title"
-import PriceTag from "./styles/PriceTag"
-import ItemStyles from "./styles/ItemStyles"
+import Title from "../styles/Title"
+import PriceTag from "../styles/PriceTag"
+import ItemStyles from "../styles/ItemStyles"
 
+import { ProductItemFragment } from "./parts"
 import { formatMoney } from "@/utils/formatMoney"
-import type { ProductItemFragment } from "@/__generated__/graphql"
 
-export function Product({ product }: { product: ProductItemFragment }) {
+interface Props {
+	data: FragmentOf<typeof ProductItemFragment>
+}
+
+export function Product({ data }: Props) {
+	const product = readFragment(ProductItemFragment, data)
+
 	return (
 		<ItemStyles>
 			<img
