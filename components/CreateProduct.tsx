@@ -8,6 +8,7 @@ import { useForm } from "@/hooks/useForm"
 
 import DisplayError from "./DisplayError"
 import FormStyles from "../styles/FormStyles"
+import { ALL_PRODUCTS_QUERY } from "@/utils/queries"
 
 const CREATE_NEW_PRODUCT = gql`
 	mutation CreateSingleProduct(
@@ -38,7 +39,7 @@ export default function CreateProduct() {
 
 	const [createProduct, { loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
 		variables: inputs,
-		// refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+		refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
 	})
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

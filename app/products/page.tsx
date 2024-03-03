@@ -3,21 +3,8 @@
 import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
-import { graphql } from "@/graphql"
+import { ALL_PRODUCTS_QUERY } from "@/utils/queries"
 import { Product } from "@/components/Product/Product"
-import { ProductItemFragment } from "@/components/Product/parts"
-
-const ALL_PRODUCTS_QUERY = graphql(
-	`
-		query GetAllProducts {
-			products {
-				id
-				...ProductItem
-			}
-		}
-	`,
-	[ProductItemFragment]
-)
 
 const ProductListStyles = styled.div`
 	display: grid;
