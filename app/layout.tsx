@@ -2,9 +2,9 @@ import "./globals.css"
 import type { Metadata } from "next"
 
 import Page from "@/components/page"
-import Providers from "@/utils/Providers"
-import ApolloWrapper from "@/utils/ApolloProvider"
-import StyledComponentsRegistry from "@/utils/registry"
+import Providers from "@/components/Providers"
+import ApolloWrapper from "@/components/ApolloProvider"
+import StyledComponentsRegistry from "@/components/registry"
 
 export const metadata: Metadata = {
 	title: "ecom",

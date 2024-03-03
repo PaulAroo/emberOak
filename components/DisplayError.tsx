@@ -2,7 +2,7 @@ import React from "react"
 
 import { ApolloError } from "@apollo/client/errors"
 
-import ErrorStyles from "./styles/ErrorStyles"
+import ErrorStyles from "../styles/ErrorStyles"
 
 export default function DisplayError({ error }: { error?: ApolloError }) {
 	if (!error || !error.message) return null

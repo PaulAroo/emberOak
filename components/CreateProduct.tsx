@@ -4,12 +4,10 @@ import { FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { gql, useMutation } from "@apollo/client"
 
-import { useForm } from "@/utils/hooks/useForm"
-import { ALL_PRODUCTS_QUERY } from "@/app/products/page"
-import { CreateSingleProductMutation } from "@/__generated__/graphql"
+import { useForm } from "@/hooks/useForm"
 
 import DisplayError from "./DisplayError"
-import FormStyles from "./styles/FormStyles"
+import FormStyles from "../styles/FormStyles"
 
 const CREATE_NEW_PRODUCT = gql`
 	mutation CreateSingleProduct(
@@ -38,11 +36,10 @@ export default function CreateProduct() {
 	const router = useRouter()
 	const { inputs, handleInputChange, clearFormInputs } = useForm({})
 
-	const [createProduct, { loading, error }] =
-		useMutation<CreateSingleProductMutation>(CREATE_NEW_PRODUCT, {
-			variables: inputs,
-			refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
-		})
+	const [createProduct, { loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
+		variables: inputs,
+		// refetchQueries: [{ query: ALL_PRODUCTS_QUERY }],
+	})
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
