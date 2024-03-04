@@ -1,9 +1,9 @@
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
+import { SingleProduct } from "@/components/SingleProduct"
 
 export default function SingleProductPage({
 	params,
 }: {
 	params: { id: string }
 }) {
-	return <div>single product with id {params.id}</div>
+	return <SingleProduct id={params.id} />
 }
