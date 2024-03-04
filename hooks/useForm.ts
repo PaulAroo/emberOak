@@ -1,9 +1,9 @@
 import { useState, ChangeEvent } from "react"
 
 type FromInputs = {
-	name?: string
-	price?: number
-	description?: string
+	name: string
+	price: number
+	description: string
 	image?: File
 }
 

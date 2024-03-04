@@ -3,27 +3,8 @@
 import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
-import { graphql } from "@/graphql"
-import { Product } from "@/components/Product"
-
-const ALL_PRODUCTS_QUERY = graphql(`
-	query GetAllProducts {
-		products {
-			id
-			description
-			name
-			status
-			price
-			photo {
-				id
-				altText
-				image {
-					publicUrlTransformed
-				}
-			}
-		}
-	}
-`)
+import { ALL_PRODUCTS_QUERY } from "@/utils/queries"
+import { Product } from "@/components/Product/Product"
 
 const ProductListStyles = styled.div`
 	display: grid;
@@ -40,7 +21,7 @@ export default function ProductsPage() {
 			{
 				<ProductListStyles>
 					{data.products?.map((product) => (
-						<Product key={product.id} product={product} />
+						<Product key={product.id} data={product} />
 					))}
 				</ProductListStyles>
 			}

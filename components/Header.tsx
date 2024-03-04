@@ -4,7 +4,7 @@ import Link from "next/link"
 import Nav from "./Nav"
 import styled from "styled-components"
 
-import LogoStyles from "./styles/LogoStyles"
+import LogoStyles from "../styles/LogoStyles"
 
 const HeaderStyles = styled.header`
 	.bar {
