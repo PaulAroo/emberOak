@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { FragmentOf, readFragment } from "gql.tada"
 
 import Title from "../../styles/Title"
 import PriceTag from "../../styles/PriceTag"
@@ -7,6 +6,7 @@ import ItemStyles from "../../styles/ItemStyles"
 
 import { ProductItemFragment } from "./parts"
 import { formatMoney } from "@/utils/formatMoney"
+import { FragmentOf, readFragment } from "@/graphql"
 
 interface Props {
 	data: FragmentOf<typeof ProductItemFragment>

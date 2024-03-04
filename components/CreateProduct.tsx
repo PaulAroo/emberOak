@@ -2,40 +2,22 @@
 
 import { FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 
 import { useForm } from "@/hooks/useForm"
+import { ALL_PRODUCTS_QUERY } from "@/utils/queries"
+import { CREATE_NEW_PRODUCT } from "@/utils/mutations"
 
 import DisplayError from "./DisplayError"
 import FormStyles from "../styles/FormStyles"
-import { ALL_PRODUCTS_QUERY } from "@/utils/queries"
-
-const CREATE_NEW_PRODUCT = gql`
-	mutation CreateSingleProduct(
-		$name: String!
-		$description: String!
-		$price: Int!
-		$image: Upload
-	) {
-		createProduct(
-			data: {
-				name: $name
-				description: $description
-				price: $price
-				status: "AVAILABLE"
-				photo: { create: { image: $image, altText: $name } }
-			}
-		) {
-			id
-			name
-			price
-		}
-	}
-`
 
 export default function CreateProduct() {
 	const router = useRouter()
-	const { inputs, handleInputChange, clearFormInputs } = useForm({})
+	const { inputs, handleInputChange, clearFormInputs } = useForm({
+		name: "",
+		description: "",
+		price: 0,
+	})
 
 	const [createProduct, { loading, error }] = useMutation(CREATE_NEW_PRODUCT, {
 		variables: inputs,

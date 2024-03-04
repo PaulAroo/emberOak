@@ -5,8 +5,8 @@ export const graphql = initGraphQLTada<{
 	introspection: introspection
 
 	scalars: {
-		DateTime: "Date"
-		Upload: "File"
+		DateTime: Date
+		Upload: File
 		JSON: "{ [key: string]: any }"
 	}
 }>()
