@@ -1,12 +1,21 @@
 "use client"
 
+import Image from "next/image"
 import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
 import DisplayError from "./DisplayError"
 import { SINGLE_PRODUCT_QUERY } from "@/utils/queries"
 
-const ProductStyles = styled.div``
+const ProductStyles = styled.div`
+	div {
+		position: relative;
+		min-height: 400px;
+	}
+	img {
+		object-fit: contain;
+	}
+`
 
 export const SingleProduct = ({ id }: { id: string }) => {
 	const { data, error } = useSuspenseQuery(SINGLE_PRODUCT_QUERY, {
@@ -25,7 +34,9 @@ export const SingleProduct = ({ id }: { id: string }) => {
 
 	return (
 		<ProductStyles>
-			<img src={imgUrl} alt={altText} />
+			<div>
+				<Image src={imgUrl} alt={altText} fill />
+			</div>
 
 			<h1>{product.name}</h1>
 			<p>{product.description}</p>

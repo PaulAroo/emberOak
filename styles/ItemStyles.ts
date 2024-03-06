@@ -7,10 +7,12 @@ const ItemStyles = styled.div`
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	img {
-		width: 100%;
-		height: 400px;
-		object-fit: cover;
+	& > div {
+		position: relative;
+		min-height: 400px;
+		img {
+			object-fit: cover;
+		}
 	}
 	p {
 		line-height: 2;

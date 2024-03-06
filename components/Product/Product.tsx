@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 import Title from "../../styles/Title"
 import PriceTag from "../../styles/PriceTag"
@@ -17,10 +18,13 @@ export function Product({ data }: Props) {
 
 	return (
 		<ItemStyles>
-			<img
-				src={product.photo?.image?.publicUrlTransformed!}
-				alt={product.name!}
-			/>
+			<div>
+				<Image
+					src={product.photo?.image?.publicUrlTransformed!}
+					alt={product.name!}
+					fill
+				/>
+			</div>
 			<Title>
 				<Link href={`/product/${product.id}`}>{product.name}</Link>
 			</Title>
