@@ -5,8 +5,8 @@ import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
 import DisplayError from "./DisplayError"
-import { formatMoney } from "@/utils/formatMoney"
-import { SINGLE_PRODUCT_QUERY } from "@/utils/queries"
+import { formatMoney } from "@/lib/utils"
+import { SINGLE_PRODUCT_QUERY } from "@/lib/queries"
 
 const ProductStyles = styled.div`
 	div {

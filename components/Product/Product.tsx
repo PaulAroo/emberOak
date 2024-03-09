@@ -5,8 +5,8 @@ import Title from "../../styles/Title"
 import PriceTag from "../../styles/PriceTag"
 import ItemStyles from "../../styles/ItemStyles"
 
+import { formatMoney } from "@/lib/utils"
 import { ProductItemFragment } from "./parts"
-import { formatMoney } from "@/utils/formatMoney"
 import { FragmentOf, readFragment } from "@/graphql"
 
 interface Props {

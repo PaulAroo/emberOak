@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation"
 import { useMutation } from "@apollo/client"
 
 import { useForm } from "@/hooks/useForm"
-import { ALL_PRODUCTS_QUERY } from "@/utils/queries"
-import { CREATE_NEW_PRODUCT } from "@/utils/mutations"
 
 import DisplayError from "./DisplayError"
 import FormStyles from "../styles/FormStyles"
+import { ALL_PRODUCTS_QUERY } from "@/lib/queries"
+import { CREATE_NEW_PRODUCT } from "@/lib/mutations"
 
 export default function CreateProduct() {
 	const router = useRouter()

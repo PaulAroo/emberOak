@@ -3,7 +3,7 @@
 import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
-import { ALL_PRODUCTS_QUERY } from "@/utils/queries"
+import { ALL_PRODUCTS_QUERY } from "@/lib/queries"
 import { Product } from "@/components/Product/Product"
 
 const ProductListStyles = styled.div`
