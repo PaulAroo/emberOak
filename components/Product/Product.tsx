@@ -1,10 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
 
-import Title from "../../styles/Title"
-import PriceTag from "../../styles/PriceTag"
-import ItemStyles from "../../styles/ItemStyles"
-
 import { formatMoney } from "@/lib/utils"
 import { ProductItemFragment } from "./parts"
 import { FragmentOf, readFragment } from "@/graphql"
@@ -17,19 +13,19 @@ export function Product({ data }: Props) {
 	const product = readFragment(ProductItemFragment, data)
 
 	return (
-		<ItemStyles>
+		<div>
 			<div>
-				<Image
+				{/* <Image
 					src={product.photo?.image?.publicUrlTransformed!}
 					alt={product.name!}
 					fill
-				/>
+				/> */}
 			</div>
-			<Title>
+			<h2>
 				<Link href={`/product/${product.id}`}>{product.name}</Link>
-			</Title>
-			<PriceTag>{formatMoney(product.price!)}</PriceTag>
+			</h2>
+			<p>{formatMoney(product.price!)}</p>
 			<p>{product.description}</p>
-		</ItemStyles>
+		</div>
 	)
 }

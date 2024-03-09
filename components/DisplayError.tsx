@@ -2,8 +2,6 @@ import React from "react"
 
 import { ApolloError } from "@apollo/client/errors"
 
-import ErrorStyles from "../styles/ErrorStyles"
-
 export default function DisplayError({ error }: { error?: ApolloError }) {
 	if (!error || !error.message) return null
 	let errorMessage = error.message
@@ -17,8 +15,8 @@ export default function DisplayError({ error }: { error?: ApolloError }) {
 		}
 	}
 	return (
-		<ErrorStyles>
+		<div>
 			<p data-test="graphql-error">{errorMessage}</p>
-		</ErrorStyles>
+		</div>
 	)
 }

@@ -1,14 +1,13 @@
 import "./globals.css"
 import type { Metadata } from "next"
 
-import Page from "@/components/page"
+import Header from "@/components/Header"
 import Providers from "@/components/Providers"
 import ApolloWrapper from "@/components/ApolloProvider"
-import StyledComponentsRegistry from "@/components/registry"
 
 export const metadata: Metadata = {
-	title: "ecom",
-	description: "ecommerce application",
+	title: "Ecom",
+	description: "E-commerce application",
 }
 
 export default function RootLayout({
@@ -22,9 +21,10 @@ export default function RootLayout({
 				{/* TODO: pass in the right headers */}
 				<ApolloWrapper headers={{}} initialState={{}}>
 					<Providers>
-						<StyledComponentsRegistry>
-							<Page>{children}</Page>
-						</StyledComponentsRegistry>
+						<>
+							<Header />
+							{children}
+						</>
 					</Providers>
 				</ApolloWrapper>
 			</body>
