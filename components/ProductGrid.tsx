@@ -1,10 +1,17 @@
 "use client"
 
+import Link from "next/link"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
+import {
+	Carousel,
+	CarouselContent,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+} from "@/components/ui/carousel"
 import { ALL_PRODUCTS_QUERY } from "@/lib/queries"
 import { Product } from "@/components/Product/Product"
-import Link from "next/link"
 
 export function ProductGrid() {
 	const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
@@ -21,10 +28,21 @@ export function ProductGrid() {
 					All products
 				</Link>
 			</div>
-			<div className="grid sm:grid-cols-2 gap-4">
-				{products.map((product) => (
-					<Product key={product.id} data={product} />
-				))}
+			<div>
+				<Carousel opts={{ align: "start" }} className="shadow-md">
+					<CarouselContent>
+						{products.map((product) => (
+							<CarouselItem
+								key={product.id}
+								className="md:basis-1/2 lg:basis-1/3"
+							>
+								<Product data={product} />
+							</CarouselItem>
+						))}
+					</CarouselContent>
+					<CarouselPrevious className="-left-5" />
+					<CarouselNext className="-right-5" />
+				</Carousel>
 			</div>
 		</>
 	)
