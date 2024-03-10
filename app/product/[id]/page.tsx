@@ -5,5 +5,11 @@ export default function SingleProductPage({
 }: {
 	params: { id: string }
 }) {
-	return <SingleProduct id={params.id} />
+	return (
+		<section className="py-6">
+			<div className="container">
+				<SingleProduct id={params.id} />
+			</div>
+		</section>
+	)
 }

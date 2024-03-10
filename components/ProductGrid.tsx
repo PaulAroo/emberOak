@@ -6,21 +6,13 @@ import { ALL_PRODUCTS_QUERY } from "@/lib/queries"
 import { Product } from "@/components/Product/Product"
 
 export function ProductGrid() {
-	const { data, error } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
-
-	if (error) {
-		console.log(0, error)
-	}
+	const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
 
 	return (
-		<div className="border">
-			{
-				<div className="grid grid-cols-2">
-					{data.products?.map((product) => (
-						<Product key={product.id} data={product} />
-					))}
-				</div>
-			}
+		<div className="grid sm:grid-cols-2 gap-4">
+			{data.products?.map((product) => (
+				<Product key={product.id} data={product} />
+			))}
 		</div>
 	)
 }

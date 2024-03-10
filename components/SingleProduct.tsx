@@ -24,8 +24,8 @@ export const SingleProduct = ({ id }: { id: string }) => {
 
 	return (
 		<div>
-			<div>
-				<Image src={imgUrl} alt={altText} fill />
+			<div className="relative min-h-60 lg:min-h-80 xl:min-h-96">
+				<Image src={imgUrl} alt={altText} fill className="object-cover" />
 			</div>
 
 			<h1>{product.name}</h1>

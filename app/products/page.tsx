@@ -13,15 +13,15 @@ export default function ProductsPage() {
 	}
 
 	return (
-		<div>
-			products
-			{
-				<div className="grid grid-cols-2">
+		<section className="py-6">
+			<div className="container">
+				<h1>All products</h1>
+				<div className="grid sm:grid-cols-2 gap-4">
 					{data.products?.map((product) => (
 						<Product key={product.id} data={product} />
 					))}
 				</div>
-			}
-		</div>
+			</div>
+		</section>
 	)
 }
