@@ -1,16 +1,22 @@
-import Nav from "./Nav"
 import Link from "next/link"
 
-export default function Header() {
+import { Search, ShoppingCart } from "lucide-react"
+
+export function Header() {
 	return (
-		<>
-			<div className="bar">
-				<Link href="/">ecom</Link>
-				<Nav />
+		<header className="py-2 border-b">
+			<div className="container flex justify-between">
+				<Link href="/">Ecom</Link>
+				<nav className="flex gap-4">
+					{/* <Link href="/products">Products</Link>
+					<Link href="/sell">Sell</Link>
+					<Link href="/orders">Orders</Link> */}
+
+					<Search />
+					<ShoppingCart />
+					<Link href="/account">Login</Link>
+				</nav>
 			</div>
-			<div className="sub-bar">
-				<p>search</p>
-			</div>
-		</>
+		</header>
 	)
 }

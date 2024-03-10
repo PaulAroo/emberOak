@@ -2,7 +2,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
-import Header from "@/components/Header"
+import { Header } from "@/components/Header"
 import Providers from "@/components/Providers"
 import ApolloWrapper from "@/components/ApolloProvider"
 
@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={radnika_font.className}>
-			<body>
+			<body className="min-h-dvh bg-slate-500">
 				{/* TODO: pass in the right headers */}
 				<ApolloWrapper headers={{}} initialState={{}}>
 					<Providers>
