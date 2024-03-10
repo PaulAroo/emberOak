@@ -1,14 +1,20 @@
 import "./globals.css"
 import type { Metadata } from "next"
+import localFont from "next/font/local"
 
-import Page from "@/components/page"
+import { Header } from "@/components/Header"
 import Providers from "@/components/Providers"
 import ApolloWrapper from "@/components/ApolloProvider"
-import StyledComponentsRegistry from "@/components/registry"
+
+const radnika_font = localFont({
+	src: "./radnikanext-medium-webfont.woff2",
+	display: "swap",
+	variable: "--font-radnik",
+})
 
 export const metadata: Metadata = {
-	title: "ecom",
-	description: "ecommerce application",
+	title: "Ecom",
+	description: "E-commerce application",
 }
 
 export default function RootLayout({
@@ -17,14 +23,13 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang="en">
-			<body>
+		<html lang="en" className={radnika_font.className}>
+			<body className="min-h-dvh bg-slate-500">
 				{/* TODO: pass in the right headers */}
 				<ApolloWrapper headers={{}} initialState={{}}>
 					<Providers>
-						<StyledComponentsRegistry>
-							<Page>{children}</Page>
-						</StyledComponentsRegistry>
+						<Header />
+						{children}
 					</Providers>
 				</ApolloWrapper>
 			</body>

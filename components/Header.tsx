@@ -1,39 +1,22 @@
-"use client"
-
 import Link from "next/link"
-import Nav from "./Nav"
-import styled from "styled-components"
 
-import LogoStyles from "../styles/LogoStyles"
+import { Search, ShoppingCart } from "lucide-react"
 
-const HeaderStyles = styled.header`
-	.bar {
-		border-bottom: 10px solid var(--black, black);
-		display: grid;
-		grid-template-columns: auto 1fr;
-		justify-content: space-between;
-		align-items: stretch;
-	}
-
-	.sub-bar {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		border-bottom: 1px solid var(--black, black);
-	}
-`
-
-export default function Header() {
+export function Header() {
 	return (
-		<HeaderStyles>
-			<div className="bar">
-				<LogoStyles>
-					<Link href="/">ecom</Link>
-				</LogoStyles>
-				<Nav />
+		<header className="py-2 border-b">
+			<div className="container flex justify-between">
+				<Link href="/">Ecom</Link>
+				<nav className="flex gap-4">
+					{/* <Link href="/products">Products</Link>
+					<Link href="/sell">Sell</Link>
+					<Link href="/orders">Orders</Link> */}
+
+					<Search />
+					<ShoppingCart />
+					<Link href="/account">Login</Link>
+				</nav>
 			</div>
-			<div className="sub-bar">
-				<p>search</p>
-			</div>
-		</HeaderStyles>
+		</header>
 	)
 }

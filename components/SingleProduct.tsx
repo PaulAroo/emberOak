@@ -1,22 +1,11 @@
 "use client"
 
 import Image from "next/image"
-import styled from "styled-components"
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr"
 
 import DisplayError from "./DisplayError"
-import { formatMoney } from "@/utils/formatMoney"
-import { SINGLE_PRODUCT_QUERY } from "@/utils/queries"
-
-const ProductStyles = styled.div`
-	div {
-		position: relative;
-		min-height: 400px;
-	}
-	img {
-		object-fit: contain;
-	}
-`
+import { formatMoney } from "@/lib/utils"
+import { SINGLE_PRODUCT_QUERY } from "@/lib/queries"
 
 export const SingleProduct = ({ id }: { id: string }) => {
 	const { data, error } = useSuspenseQuery(SINGLE_PRODUCT_QUERY, {
@@ -34,14 +23,14 @@ export const SingleProduct = ({ id }: { id: string }) => {
 	const altText = product.photo?.altText!
 
 	return (
-		<ProductStyles>
-			<div>
-				<Image src={imgUrl} alt={altText} fill />
+		<div>
+			<div className="relative min-h-60 lg:min-h-80 xl:min-h-96">
+				<Image src={imgUrl} alt={altText} fill className="object-cover" />
 			</div>
 
 			<h1>{product.name}</h1>
 			<p>{product.description}</p>
 			<p>{formatMoney(product.price!)}</p>
-		</ProductStyles>
+		</div>
 	)
 }

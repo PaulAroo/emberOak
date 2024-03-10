@@ -1,12 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
 
-import Title from "../../styles/Title"
-import PriceTag from "../../styles/PriceTag"
-import ItemStyles from "../../styles/ItemStyles"
-
+import { formatMoney } from "@/lib/utils"
 import { ProductItemFragment } from "./parts"
-import { formatMoney } from "@/utils/formatMoney"
 import { FragmentOf, readFragment } from "@/graphql"
 
 interface Props {
@@ -17,19 +13,22 @@ export function Product({ data }: Props) {
 	const product = readFragment(ProductItemFragment, data)
 
 	return (
-		<ItemStyles>
-			<div>
+		<div className="bg-white shadow-md">
+			<div className="relative min-h-60 lg:min-h-80 xl:min-h-96">
 				<Image
 					src={product.photo?.image?.publicUrlTransformed!}
 					alt={product.name!}
 					fill
+					className="object-cover"
 				/>
 			</div>
-			<Title>
-				<Link href={`/product/${product.id}`}>{product.name}</Link>
-			</Title>
-			<PriceTag>{formatMoney(product.price!)}</PriceTag>
-			<p>{product.description}</p>
-		</ItemStyles>
+			<div className="py-2">
+				<h2>
+					<Link href={`/product/${product.id}`}>{product.name}</Link>
+				</h2>
+				<p>{formatMoney(product.price!)}</p>
+				<p>{product.description}</p>
+			</div>
+		</div>
 	)
 }
