@@ -1,11 +1,14 @@
 import { ProductGrid } from "@/components/ProductGrid"
+import { Suspense } from "react"
 
 export default function HomePage() {
 	return (
 		<main>
-			<section className="bg-slate-200 py-6">
+			<section className="py-6">
 				<div className="container">
-					<ProductGrid />
+					<Suspense fallback={<p>loading...</p>}>
+						<ProductGrid />
+					</Suspense>
 				</div>
 			</section>
 		</main>

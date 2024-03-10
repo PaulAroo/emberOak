@@ -1,9 +1,20 @@
 "use client"
 
-export default function Error() {
+import { Button } from "@/components/ui/button"
+
+export default function Error({
+	error,
+	reset,
+}: {
+	error: Error & { message?: string }
+	reset: () => void
+}) {
 	return (
-		<div className="container">
-			<p className=" text-red-800">something went wrong</p>
+		<div className="container py-6 space-y-4" role="alert">
+			<div className="border-l-4 border-l-red-500 pl-4">
+				<p className="capitalize text-red-500">{error.message}</p>
+			</div>
+			<Button onClick={reset}>try again</Button>
 		</div>
 	)
 }

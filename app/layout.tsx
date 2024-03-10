@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={radnika_font.className}>
-			<body className="min-h-dvh bg-slate-500">
+			<body className="min-h-dvh">
 				{/* TODO: pass in the right headers */}
 				<ApolloWrapper headers={{}} initialState={{}}>
 					<Providers>
