@@ -1,9 +1,16 @@
 import "./globals.css"
 import type { Metadata } from "next"
+import localFont from "next/font/local"
 
 import Header from "@/components/Header"
 import Providers from "@/components/Providers"
 import ApolloWrapper from "@/components/ApolloProvider"
+
+const radnika_font = localFont({
+	src: "./radnikanext-medium-webfont.woff2",
+	display: "swap",
+	variable: "--font-radnik",
+})
 
 export const metadata: Metadata = {
 	title: "Ecom",
@@ -16,15 +23,13 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" className={radnika_font.className}>
 			<body>
 				{/* TODO: pass in the right headers */}
 				<ApolloWrapper headers={{}} initialState={{}}>
 					<Providers>
-						<>
-							<Header />
-							{children}
-						</>
+						<Header />
+						{children}
 					</Providers>
 				</ApolloWrapper>
 			</body>
