@@ -2,8 +2,8 @@ import Link from "next/link"
 import Image from "next/image"
 
 import { formatMoney } from "@/lib/utils"
-import { ProductItemFragment } from "./parts"
 import { FragmentOf, readFragment } from "@/graphql"
+import { ProductItemFragment } from "@/lib/fragments"
 
 interface Props {
 	data: FragmentOf<typeof ProductItemFragment>

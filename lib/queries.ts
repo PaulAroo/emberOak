@@ -1,5 +1,5 @@
 import { graphql } from "@/graphql"
-import { ProductItemFragment } from "@/components/Product/parts"
+import { ProductItemFragment } from "@/lib/fragments"
 
 const ALL_PRODUCTS_QUERY = graphql(
 	`
