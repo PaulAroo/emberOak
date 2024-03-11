@@ -3,8 +3,8 @@ import { ProductItemFragment } from "@/lib/fragments"
 
 const ALL_PRODUCTS_QUERY = graphql(
 	`
-		query GetAllProducts {
-			products {
+		query GetAllProducts($skip: Int = 0, $take: Int) {
+			products(take: $take, skip: $skip) {
 				id
 				...ProductItem
 			}
@@ -30,4 +30,10 @@ const SINGLE_PRODUCT_QUERY = graphql(`
 	}
 `)
 
-export { ALL_PRODUCTS_QUERY, SINGLE_PRODUCT_QUERY }
+const PRODUCTS_COUNT_QUERY = graphql(`
+	query GetProductsCount {
+		productsCount
+	}
+`)
+
+export { ALL_PRODUCTS_QUERY, SINGLE_PRODUCT_QUERY, PRODUCTS_COUNT_QUERY }
