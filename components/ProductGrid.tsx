@@ -14,13 +14,16 @@ import { ALL_PRODUCTS_QUERY } from "@/lib/queries"
 import { Product } from "@/components/Product/Product"
 
 export function ProductGrid() {
-	const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY)
+	const { data } = useSuspenseQuery(ALL_PRODUCTS_QUERY, {
+		variables: {
+			take: 4,
+		},
+	})
 
 	if (!data.products) {
 		throw new Error("no products found")
 	}
 
-	const products = data.products.slice(0, 4)
 	return (
 		<>
 			<div className="flex flex-row-reverse py-2">
@@ -31,7 +34,7 @@ export function ProductGrid() {
 			<div>
 				<Carousel opts={{ align: "start" }} className="shadow-md">
 					<CarouselContent>
-						{products.map((product) => (
+						{data.products.map((product) => (
 							<CarouselItem
 								key={product.id}
 								className="md:basis-1/2 lg:basis-1/3"
