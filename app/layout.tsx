@@ -13,8 +13,8 @@ const radnika_font = localFont({
 })
 
 export const metadata: Metadata = {
-	title: "Ecom",
-	description: "E-commerce application",
+	title: "Ember Oak",
+	description: "Shop and sell furnitures online",
 }
 
 export default function RootLayout({

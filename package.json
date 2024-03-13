@@ -1,6 +1,6 @@
 {
-	"name": "ecom",
-	"version": "0.0.0-dev.0",
+	"name": "ember_oak",
+	"version": "0.0.0-dev.1",
 	"private": true,
 	"scripts": {
 		"dev": "next -p 5555",
