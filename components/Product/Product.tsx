@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 
 import { formatMoney } from "@/lib/utils"
 import { FragmentOf, readFragment } from "@/graphql"
@@ -11,6 +14,12 @@ interface Props {
 
 export function Product({ data }: Props) {
 	const product = readFragment(ProductItemFragment, data)
+
+	const [isClient, setIsClient] = useState(false)
+
+	useEffect(() => {
+		setIsClient(true)
+	}, [])
 
 	return (
 		<div className="bg-white shadow-md">
@@ -26,7 +35,8 @@ export function Product({ data }: Props) {
 				<h2>
 					<Link href={`/product/${product.id}`}>{product.name}</Link>
 				</h2>
-				<p>{formatMoney(product.price!)}</p>
+				{isClient && <p>{formatMoney(product.price!)}</p>}
+
 				<p>{product.description}</p>
 			</div>
 		</div>
