@@ -1,6 +1,6 @@
 import { graphql } from "@/graphql"
 
-export const CREATE_NEW_PRODUCT = graphql(`
+const CREATE_NEW_PRODUCT = graphql(`
 	mutation CreateSingleProduct(
 		$name: String!
 		$description: String!
@@ -22,3 +22,22 @@ export const CREATE_NEW_PRODUCT = graphql(`
 		}
 	}
 `)
+
+const USER_SIGN_IN = graphql(`
+	mutation AuthenticateUserWithPassword($email: String!, $password: String!) {
+		authenticateUserWithPassword(email: $email, password: $password) {
+			... on UserAuthenticationWithPasswordSuccess {
+				sessionToken
+				item {
+					name
+					email
+				}
+			}
+			... on UserAuthenticationWithPasswordFailure {
+				message
+			}
+		}
+	}
+`)
+
+export { CREATE_NEW_PRODUCT, USER_SIGN_IN }
