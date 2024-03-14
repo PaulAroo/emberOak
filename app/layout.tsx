@@ -4,7 +4,6 @@ import localFont from "next/font/local"
 
 import { Header } from "@/components/Header"
 import Providers from "@/components/Providers"
-import ApolloWrapper from "@/components/ApolloProvider"
 
 const radnika_font = localFont({
 	src: "./radnikanext-medium-webfont.woff2",
@@ -25,13 +24,10 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={radnika_font.className}>
 			<body className="min-h-dvh">
-				{/* TODO: pass in the right headers */}
-				<ApolloWrapper headers={{}} initialState={{}}>
-					<Providers>
-						<Header />
-						{children}
-					</Providers>
-				</ApolloWrapper>
+				<Providers>
+					<Header />
+					{children}
+				</Providers>
 			</body>
 		</html>
 	)

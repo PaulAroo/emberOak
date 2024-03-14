@@ -10,13 +10,11 @@ import {
 	NextSSRApolloClient,
 	SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr"
-
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 
 import { endpoint, prodEndpoint } from "@/config"
 
-// TODO: add the right types
-function makeClient(headers: any, initialState: any) {
+function makeClient(initialState: any) {
 	const uri = process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 
 	return () => {
@@ -26,7 +24,6 @@ function makeClient(headers: any, initialState: any) {
 				credentials: "include",
 			},
 		})
-
 		const presetHeaderLink = setContext(() => {
 			return {
 				headers: {
@@ -34,7 +31,6 @@ function makeClient(headers: any, initialState: any) {
 				},
 			}
 		})
-
 		const httpLink = presetHeaderLink.concat(uploadLink)
 
 		return new NextSSRApolloClient({
@@ -75,17 +71,15 @@ function makeClient(headers: any, initialState: any) {
 
 interface ApolloWrapperProps {
 	children: ReactNode
-	headers: any
 	initialState: any
 }
 
 export default function ApolloWrapper({
 	children,
-	headers,
 	initialState,
 }: ApolloWrapperProps) {
 	return (
-		<ApolloNextAppProvider makeClient={makeClient(headers, initialState)}>
+		<ApolloNextAppProvider makeClient={makeClient(initialState)}>
 			{children}
 		</ApolloNextAppProvider>
 	)
