@@ -1,31 +1,34 @@
 "use client"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { useMutation } from "@apollo/client"
+import { zodResolver } from "@hookform/resolvers/zod"
 
-import Container from "@/components/MainContainer"
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card"
-
-import { Button } from "@/components/ui/button"
 import {
 	Form,
-	FormControl,
-	FormField,
 	FormItem,
+	FormField,
 	FormLabel,
 	FormMessage,
+	FormControl,
 } from "@/components/ui/form"
+import {
+	Card,
+	CardTitle,
+	CardHeader,
+	CardFooter,
+	CardContent,
+	CardDescription,
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { USER_SIGN_IN } from "@/lib/mutations"
+import { Button } from "@/components/ui/button"
+import Container from "@/components/MainContainer"
+import { GET_USER_QUERY } from "@/lib/queries"
+import { useRouter } from "next/navigation"
 
 export default function SigninPage() {
+	const router = useRouter()
 	const formSchema = z.object({
 		email: z.string().email({ message: "invalid email address" }),
 		password: z
@@ -41,9 +44,29 @@ export default function SigninPage() {
 		},
 	})
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values)
+	const [signin, { loading, data }] = useMutation(USER_SIGN_IN, {
+		variables: form.getValues(),
+		refetchQueries: [GET_USER_QUERY],
+	})
+
+	let errmsg = ""
+	if (
+		data?.authenticateUserWithPassword?.__typename ===
+		"UserAuthenticationWithPasswordFailure"
+	) {
+		errmsg = data.authenticateUserWithPassword.message
+	}
+
+	async function onSubmit() {
+		const res = await signin()
+		form.setFocus("email")
 		form.reset()
+		if (
+			res.data?.authenticateUserWithPassword?.__typename ===
+			"UserAuthenticationWithPasswordSuccess"
+		) {
+			router.push("/products")
+		}
 	}
 
 	return (
@@ -53,7 +76,12 @@ export default function SigninPage() {
 					<CardTitle className="capitalize">Sign in</CardTitle>
 					<CardDescription>Sign into your account</CardDescription>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="space-y-4">
+					{!!errmsg && (
+						<p className="text-red-500 border-l-4 border-l-red-500 pl-4">
+							{errmsg}
+						</p>
+					)}
 					<Form {...form}>
 						<form
 							onSubmit={form.handleSubmit(onSubmit)}
@@ -90,7 +118,12 @@ export default function SigninPage() {
 					</Form>
 				</CardContent>
 				<CardFooter>
-					<Button type="submit" className="w-full" form="signin">
+					<Button
+						type="submit"
+						className="w-full"
+						form="signin"
+						disabled={loading}
+					>
 						Sign in
 					</Button>
 				</CardFooter>

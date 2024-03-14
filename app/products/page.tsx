@@ -27,10 +27,6 @@ export default function ProductsPage({ params }: { params: { page: string } }) {
 		},
 	})
 
-	if (error) {
-		console.log(0, error)
-	}
-
 	const totalNumberOfProducts = count.productsCount || 0
 	const totalNoOfPages = Math.ceil(totalNumberOfProducts / perPage)
 

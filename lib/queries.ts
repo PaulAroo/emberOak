@@ -36,4 +36,21 @@ const PRODUCTS_COUNT_QUERY = graphql(`
 	}
 `)
 
-export { ALL_PRODUCTS_QUERY, SINGLE_PRODUCT_QUERY, PRODUCTS_COUNT_QUERY }
+const GET_USER_QUERY = graphql(`
+	query GetUser {
+		authenticatedItem {
+			... on User {
+				id
+				name
+				email
+			}
+		}
+	}
+`)
+
+export {
+	GET_USER_QUERY,
+	ALL_PRODUCTS_QUERY,
+	PRODUCTS_COUNT_QUERY,
+	SINGLE_PRODUCT_QUERY,
+}
