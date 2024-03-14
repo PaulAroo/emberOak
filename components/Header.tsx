@@ -14,7 +14,7 @@ export function Header() {
 
 					<Search />
 					<ShoppingCart />
-					<Link href="/account">Login</Link>
+					<Link href="/signin">Login</Link>
 				</nav>
 			</div>
 		</header>
