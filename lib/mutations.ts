@@ -40,4 +40,10 @@ const USER_SIGN_IN = graphql(`
 	}
 `)
 
-export { CREATE_NEW_PRODUCT, USER_SIGN_IN }
+const USER_SIGN_OUT = graphql(`
+	mutation signout {
+		endSession
+	}
+`)
+
+export { CREATE_NEW_PRODUCT, USER_SIGN_IN, USER_SIGN_OUT }

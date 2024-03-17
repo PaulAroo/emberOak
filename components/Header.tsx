@@ -12,12 +12,18 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useMutation } from "@apollo/client"
+import { USER_SIGN_OUT } from "@/lib/mutations"
+import { GET_USER_QUERY } from "@/lib/queries"
 
 export function Header() {
 	const user = useUser()
+
+	const [signout] = useMutation(USER_SIGN_OUT, {
+		refetchQueries: [GET_USER_QUERY],
+	})
 
 	return (
 		<header className="py-2 border-b">
@@ -47,7 +53,9 @@ export function Header() {
 										<DropdownMenuItem>Settings</DropdownMenuItem>
 									</DropdownMenuGroup>
 									<DropdownMenuSeparator />
-									<DropdownMenuItem>Log out</DropdownMenuItem>
+									<DropdownMenuItem onClick={() => signout()}>
+										Log out
+									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
 						</>
