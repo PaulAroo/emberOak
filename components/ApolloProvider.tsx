@@ -14,25 +14,27 @@ import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 
 import { endpoint, prodEndpoint } from "@/config"
 
-function makeClient(initialState: any) {
+function makeClient(initialState: any, headers: any) {
 	const uri = process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 
-	return () => {
-		const uploadLink = createUploadLink({
-			uri,
-			fetchOptions: {
-				credentials: "include",
+	const uploadLink = createUploadLink({
+		uri,
+		fetchOptions: {
+			credentials: "include",
+		},
+		headers,
+	})
+	const presetHeaderLink = setContext(async (_, { header }) => {
+		return {
+			headers: {
+				...header,
+				"apollo-require-preflight": true,
 			},
-		})
-		const presetHeaderLink = setContext(() => {
-			return {
-				headers: {
-					"apollo-require-preflight": true,
-				},
-			}
-		})
-		const httpLink = presetHeaderLink.concat(uploadLink)
+		}
+	})
+	const httpLink = presetHeaderLink.concat(uploadLink)
 
+	return () => {
 		return new NextSSRApolloClient({
 			connectToDevTools: true,
 			cache: new NextSSRInMemoryCache({
@@ -72,14 +74,16 @@ function makeClient(initialState: any) {
 interface ApolloWrapperProps {
 	children: ReactNode
 	initialState: any
+	headers: any
 }
 
 export default function ApolloWrapper({
 	children,
 	initialState,
+	headers,
 }: ApolloWrapperProps) {
 	return (
-		<ApolloNextAppProvider makeClient={makeClient(initialState)}>
+		<ApolloNextAppProvider makeClient={makeClient(initialState, headers)}>
 			{children}
 		</ApolloNextAppProvider>
 	)
