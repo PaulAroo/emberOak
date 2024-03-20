@@ -51,7 +51,7 @@ function makeClient(initialState: any, session: string | null) {
 							new SSRMultipartLink({
 								stripDefer: true,
 							}),
-							uploadLink,
+							httpLink,
 					  ])
 					: ApolloLink.from([
 							onError(({ graphQLErrors, networkError }) => {
@@ -66,7 +66,7 @@ function makeClient(initialState: any, session: string | null) {
 										`[Network error]: ${networkError}. Backend is unreachable. Is it running?`
 									)
 							}),
-							uploadLink,
+							httpLink,
 					  ]),
 		})
 	}
