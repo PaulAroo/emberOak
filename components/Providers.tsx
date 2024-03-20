@@ -3,9 +3,15 @@
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar"
 import ApolloWrapper from "./ApolloProvider"
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
+const Providers = ({
+	children,
+	session,
+}: {
+	children: React.ReactNode
+	session: string | null
+}) => {
 	return (
-		<ApolloWrapper initialState={{}}>
+		<ApolloWrapper session={session} initialState={{}}>
 			{children}
 			<ProgressBar
 				height="4px"

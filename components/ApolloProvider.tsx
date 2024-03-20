@@ -14,25 +14,28 @@ import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 
 import { endpoint, prodEndpoint } from "@/config"
 
-function makeClient(initialState: any) {
+function makeClient(initialState: any, session: string | null) {
 	const uri = process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 
-	return () => {
-		const uploadLink = createUploadLink({
-			uri,
-			fetchOptions: {
-				credentials: "include",
+	const uploadLink = createUploadLink({
+		uri,
+		fetchOptions: {
+			credentials: "include",
+		},
+		headers: {
+			...(!!session ? { cookie: session } : {}),
+		},
+	})
+	const presetHeaderLink = setContext(() => {
+		return {
+			headers: {
+				"apollo-require-preflight": true,
 			},
-		})
-		const presetHeaderLink = setContext(() => {
-			return {
-				headers: {
-					"apollo-require-preflight": true,
-				},
-			}
-		})
-		const httpLink = presetHeaderLink.concat(uploadLink)
+		}
+	})
+	const httpLink = presetHeaderLink.concat(uploadLink)
 
+	return () => {
 		return new NextSSRApolloClient({
 			connectToDevTools: true,
 			cache: new NextSSRInMemoryCache({
@@ -48,7 +51,7 @@ function makeClient(initialState: any) {
 							new SSRMultipartLink({
 								stripDefer: true,
 							}),
-							httpLink,
+							uploadLink,
 					  ])
 					: ApolloLink.from([
 							onError(({ graphQLErrors, networkError }) => {
@@ -63,7 +66,7 @@ function makeClient(initialState: any) {
 										`[Network error]: ${networkError}. Backend is unreachable. Is it running?`
 									)
 							}),
-							httpLink,
+							uploadLink,
 					  ]),
 		})
 	}
@@ -72,14 +75,16 @@ function makeClient(initialState: any) {
 interface ApolloWrapperProps {
 	children: ReactNode
 	initialState: any
+	session: string | null
 }
 
 export default function ApolloWrapper({
 	children,
 	initialState,
+	session,
 }: ApolloWrapperProps) {
 	return (
-		<ApolloNextAppProvider makeClient={makeClient(initialState)}>
+		<ApolloNextAppProvider makeClient={makeClient(initialState, session)}>
 			{children}
 		</ApolloNextAppProvider>
 	)
