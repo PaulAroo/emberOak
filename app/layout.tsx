@@ -1,10 +1,10 @@
 import "./globals.css"
 import type { Metadata } from "next"
+import { headers } from "next/headers"
 import localFont from "next/font/local"
 
 import { Header } from "@/components/Header"
 import Providers from "@/components/Providers"
-import { headers } from "next/headers"
 
 const radnika_font = localFont({
 	src: "./radnikanext-medium-webfont.woff2",
@@ -22,10 +22,11 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode
 }) {
+	const session = headers().get("cookie")
 	return (
 		<html lang="en" className={radnika_font.className}>
 			<body className="min-h-dvh bg-[#faebd7]">
-				<Providers headers={headers().headers}>
+				<Providers session={session}>
 					<Header />
 					<main>{children}</main>
 				</Providers>

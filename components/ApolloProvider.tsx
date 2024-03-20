@@ -14,7 +14,7 @@ import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 
 import { endpoint, prodEndpoint } from "@/config"
 
-function makeClient(initialState: any, headers: any) {
+function makeClient(initialState: any, session: string | null) {
 	const uri = process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 
 	const uploadLink = createUploadLink({
@@ -22,12 +22,13 @@ function makeClient(initialState: any, headers: any) {
 		fetchOptions: {
 			credentials: "include",
 		},
-		headers,
+		headers: {
+			...(!!session ? { cookie: session } : {}),
+		},
 	})
-	const presetHeaderLink = setContext(async (_, { header }) => {
+	const presetHeaderLink = setContext(() => {
 		return {
 			headers: {
-				...header,
 				"apollo-require-preflight": true,
 			},
 		}
@@ -50,7 +51,7 @@ function makeClient(initialState: any, headers: any) {
 							new SSRMultipartLink({
 								stripDefer: true,
 							}),
-							httpLink,
+							uploadLink,
 					  ])
 					: ApolloLink.from([
 							onError(({ graphQLErrors, networkError }) => {
@@ -65,7 +66,7 @@ function makeClient(initialState: any, headers: any) {
 										`[Network error]: ${networkError}. Backend is unreachable. Is it running?`
 									)
 							}),
-							httpLink,
+							uploadLink,
 					  ]),
 		})
 	}
@@ -74,16 +75,16 @@ function makeClient(initialState: any, headers: any) {
 interface ApolloWrapperProps {
 	children: ReactNode
 	initialState: any
-	headers: any
+	session: string | null
 }
 
 export default function ApolloWrapper({
 	children,
 	initialState,
-	headers,
+	session,
 }: ApolloWrapperProps) {
 	return (
-		<ApolloNextAppProvider makeClient={makeClient(initialState, headers)}>
+		<ApolloNextAppProvider makeClient={makeClient(initialState, session)}>
 			{children}
 		</ApolloNextAppProvider>
 	)

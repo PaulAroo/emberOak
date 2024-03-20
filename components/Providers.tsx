@@ -5,13 +5,13 @@ import ApolloWrapper from "./ApolloProvider"
 
 const Providers = ({
 	children,
-	headers,
+	session,
 }: {
 	children: React.ReactNode
-	headers: any
+	session: string | null
 }) => {
 	return (
-		<ApolloWrapper headers={headers} initialState={{}}>
+		<ApolloWrapper session={session} initialState={{}}>
 			{children}
 			<ProgressBar
 				height="4px"
