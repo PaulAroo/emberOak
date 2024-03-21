@@ -29,6 +29,8 @@ export default function RootLayout({
 				<Providers session={session}>
 					<Header />
 					<main>{children}</main>
+					<p>sess</p>
+					<p>{session}</p>
 				</Providers>
 			</body>
 		</html>
