@@ -23,13 +23,15 @@ function makeClient(initialState: any, session: string | null) {
 			credentials: "include",
 		},
 		headers: {
-			...(!!session ? { cookie: session } : {}),
+			...(!!session ? { Cookie: session } : {}),
 		},
 	})
-	const presetHeaderLink = setContext(() => {
+	const presetHeaderLink = setContext(async (_, { headers }) => {
 		return {
 			headers: {
+				...headers,
 				"apollo-require-preflight": true,
+				// "Cookie": session
 			},
 		}
 	})
