@@ -1,11 +1,7 @@
-"use client"
-
-import { ReactNode } from "react"
 import { ApolloLink } from "@apollo/client"
 import { onError } from "@apollo/client/link/error"
 import { setContext } from "@apollo/client/link/context"
 import {
-	ApolloNextAppProvider,
 	NextSSRInMemoryCache,
 	NextSSRApolloClient,
 	SSRMultipartLink,
@@ -14,26 +10,20 @@ import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 
 import { endpoint, prodEndpoint } from "@/config"
 
-function makeClient(initialState: any, session: string | null, headers: any) {
+export const makeClient = (headers: any) => {
 	const uri = process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
-
 	const uploadLink = createUploadLink({
 		uri,
 		fetchOptions: {
 			credentials: "include",
 		},
 		headers: headers,
-		// headers: {
-		// 	...(!!session ? { Cookie: session } : {}),
-		// },
 	})
-	const presetHeaderLink = setContext(async () => {
-		return {
-			headers: {
-				"apollo-require-preflight": true,
-			},
-		}
-	})
+	const presetHeaderLink = setContext(() => ({
+		headers: {
+			"apollo-require-preflight": true,
+		},
+	}))
 	const httpLink = presetHeaderLink.concat(uploadLink)
 
 	return () => {
@@ -45,7 +35,7 @@ function makeClient(initialState: any, session: string | null, headers: any) {
 						fields: {},
 					},
 				},
-			}).restore(initialState || {}),
+			}),
 			link:
 				typeof window === "undefined"
 					? ApolloLink.from([
@@ -71,26 +61,4 @@ function makeClient(initialState: any, session: string | null, headers: any) {
 					  ]),
 		})
 	}
-}
-
-interface ApolloWrapperProps {
-	children: ReactNode
-	initialState: any
-	session: string | null
-	headers: any
-}
-
-export default function ApolloWrapper({
-	children,
-	initialState,
-	session,
-	headers,
-}: ApolloWrapperProps) {
-	return (
-		<ApolloNextAppProvider
-			makeClient={makeClient(initialState, session, headers)}
-		>
-			{children}
-		</ApolloNextAppProvider>
-	)
 }

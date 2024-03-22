@@ -1,19 +1,10 @@
 "use client"
 
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar"
-import ApolloWrapper from "./ApolloProvider"
 
-const Providers = ({
-	children,
-	session,
-	headers,
-}: {
-	children: React.ReactNode
-	session: string | null
-	headers: any
-}) => {
+const Providers = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<ApolloWrapper session={session} initialState={{}} headers={headers}>
+		<>
 			{children}
 			<ProgressBar
 				height="4px"
@@ -21,7 +12,7 @@ const Providers = ({
 				options={{ showSpinner: false }}
 				shallowRouting
 			/>
-		</ApolloWrapper>
+		</>
 	)
 }
 
