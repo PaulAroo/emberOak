@@ -33,7 +33,7 @@ export default function RootLayout({
 	return (
 		<html lang="en" className={radnika_font.className}>
 			<body className="min-h-dvh bg-[#faebd7]">
-				<Providers session={session}>
+				<Providers session={session} headers={headers().headers}>
 					<Header />
 					<main>{children}</main>
 					<p>{session}</p>

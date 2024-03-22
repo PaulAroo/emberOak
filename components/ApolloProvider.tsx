@@ -14,7 +14,7 @@ import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 
 import { endpoint, prodEndpoint } from "@/config"
 
-function makeClient(initialState: any, session: string | null) {
+function makeClient(initialState: any, session: string | null, headers: any) {
 	const uri = process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 
 	const uploadLink = createUploadLink({
@@ -22,16 +22,15 @@ function makeClient(initialState: any, session: string | null) {
 		fetchOptions: {
 			credentials: "include",
 		},
-		headers: {
-			...(!!session ? { Cookie: session } : {}),
-		},
+		headers: headers,
+		// headers: {
+		// 	...(!!session ? { Cookie: session } : {}),
+		// },
 	})
-	const presetHeaderLink = setContext(async (_, { headers }) => {
+	const presetHeaderLink = setContext(async () => {
 		return {
 			headers: {
-				...headers,
 				"apollo-require-preflight": true,
-				// "Cookie": session
 			},
 		}
 	})
@@ -78,15 +77,19 @@ interface ApolloWrapperProps {
 	children: ReactNode
 	initialState: any
 	session: string | null
+	headers: any
 }
 
 export default function ApolloWrapper({
 	children,
 	initialState,
 	session,
+	headers,
 }: ApolloWrapperProps) {
 	return (
-		<ApolloNextAppProvider makeClient={makeClient(initialState, session)}>
+		<ApolloNextAppProvider
+			makeClient={makeClient(initialState, session, headers)}
+		>
 			{children}
 		</ApolloNextAppProvider>
 	)
