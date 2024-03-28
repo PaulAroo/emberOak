@@ -20,12 +20,12 @@ import {
 	CardContent,
 	CardDescription,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { useRouter } from "next/navigation"
+import { GET_USER_QUERY } from "@/lib/queries"
 import { USER_SIGN_IN } from "@/lib/mutations"
 import { Button } from "@/components/ui/button"
 import Container from "@/components/MainContainer"
-import { GET_USER_QUERY } from "@/lib/queries"
-import { useRouter } from "next/navigation"
+import { Input, PasswordInput } from "@/components/ui/input"
 
 export default function SigninPage() {
 	const router = useRouter()
@@ -108,7 +108,7 @@ export default function SigninPage() {
 									<FormItem>
 										<FormLabel>Password</FormLabel>
 										<FormControl>
-											<Input type="password" {...field} />
+											<PasswordInput {...field} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
