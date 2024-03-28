@@ -20,6 +20,7 @@ import {
 	CardContent,
 	CardDescription,
 } from "@/components/ui/card"
+import { Icons } from "@/components/Icons"
 import { useRouter } from "next/navigation"
 import { GET_USER_QUERY } from "@/lib/queries"
 import { USER_SIGN_IN } from "@/lib/mutations"
@@ -124,7 +125,7 @@ export default function SigninPage() {
 						form="signin"
 						disabled={loading}
 					>
-						Sign in
+						{loading ? <Icons.spinner /> : "Sign in"}
 					</Button>
 				</CardFooter>
 			</Card>
