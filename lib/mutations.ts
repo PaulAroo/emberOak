@@ -56,4 +56,16 @@ const USER_SIGN_OUT = graphql(`
 	}
 `)
 
-export { CREATE_NEW_PRODUCT, USER_SIGN_IN, USER_SIGN_OUT, USER_SIGN_UP }
+const SEND_RESET_LINK = graphql(`
+	mutation SendUserPasswordResetLink($email: String!) {
+		sendUserPasswordResetLink(email: $email)
+	}
+`)
+
+export {
+	CREATE_NEW_PRODUCT,
+	USER_SIGN_IN,
+	USER_SIGN_OUT,
+	USER_SIGN_UP,
+	SEND_RESET_LINK,
+}
