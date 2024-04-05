@@ -25,7 +25,7 @@ export default function SigninPage() {
 				<p>
 					Don&apos;t have an account? <Link href="/signup">Sign Up</Link>
 				</p>
-				<Link href="/password-reset">Forgot password?</Link>
+				<Link href="/forgot-password">Forgot password?</Link>
 			</CardFooter>
 		</Card>
 	)
