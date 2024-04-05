@@ -1,19 +1,7 @@
-import {
-	Card,
-	CardTitle,
-	CardHeader,
-	CardFooter,
-	CardContent,
-} from "@/components/ui/card"
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form"
 import { redirect } from "next/navigation"
+
+import { PasswordResetForm } from "@/components/forms/PasswordReset"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function PasswordResetPage({
 	searchParams,
@@ -26,7 +14,12 @@ export default function PasswordResetPage({
 
 	return (
 		<Card className="max-w-96 m-auto">
-			<p>password reset</p>
+			<CardHeader>
+				<CardTitle className="capitalize text-center">Reset Password</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<PasswordResetForm />
+			</CardContent>
 		</Card>
 	)
 }
