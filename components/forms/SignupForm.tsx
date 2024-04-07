@@ -47,7 +47,7 @@ export const SignupForm = () => {
 	async function onSubmit() {
 		try {
 			await signup()
-			router.push("/signin")
+			router.replace("/signin")
 		} catch (error) {
 			const msg = (error as ApolloError).message
 			if (msg.includes("Unique constraint")) {

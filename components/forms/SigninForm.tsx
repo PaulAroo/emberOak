@@ -57,7 +57,7 @@ export const SigninForm = () => {
 			res.data?.authenticateUserWithPassword?.__typename ===
 			"UserAuthenticationWithPasswordSuccess"
 		) {
-			router.push("/products")
+			router.replace("/products")
 		}
 	}
 	return (

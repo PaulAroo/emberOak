@@ -3,7 +3,6 @@
 import * as Z from "zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
 import { useMutation } from "@apollo/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -24,11 +23,10 @@ import {
 } from "@/components/ui/form"
 import { Icons } from "@/components/Icons"
 import { Input } from "@/components/ui/input"
-import { SEND_RESET_LINK } from "@/lib/mutations"
 import { Button } from "@/components/ui/button"
+import { SEND_RESET_LINK } from "@/lib/mutations"
 
 export default function ForgotPasswordPage() {
-	const router = useRouter()
 	const [mailSent, setMailSent] = useState(false)
 	const formSchema = Z.object({
 		email: Z.string().email({ message: "invalid email address" }),
