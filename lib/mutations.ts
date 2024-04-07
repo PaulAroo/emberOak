@@ -1,6 +1,6 @@
 import { graphql } from "@/graphql"
 
-const CREATE_NEW_PRODUCT = graphql(`
+export const CREATE_NEW_PRODUCT = graphql(`
 	mutation CreateSingleProduct(
 		$name: String!
 		$description: String!
@@ -23,7 +23,7 @@ const CREATE_NEW_PRODUCT = graphql(`
 	}
 `)
 
-const USER_SIGN_IN = graphql(`
+export const USER_SIGN_IN = graphql(`
 	mutation AuthenticateUserWithPassword($email: String!, $password: String!) {
 		authenticateUserWithPassword(email: $email, password: $password) {
 			... on UserAuthenticationWithPasswordSuccess {
@@ -40,10 +40,41 @@ const USER_SIGN_IN = graphql(`
 	}
 `)
 
-const USER_SIGN_OUT = graphql(`
+export const USER_SIGN_UP = graphql(`
+	mutation CreateUser($data: UserCreateInput!) {
+		createUser(data: $data) {
+			id
+			name
+			email
+		}
+	}
+`)
+
+export const USER_SIGN_OUT = graphql(`
 	mutation signout {
 		endSession
 	}
 `)
 
-export { CREATE_NEW_PRODUCT, USER_SIGN_IN, USER_SIGN_OUT }
+export const SEND_RESET_LINK = graphql(`
+	mutation SendUserPasswordResetLink($email: String!) {
+		sendUserPasswordResetLink(email: $email)
+	}
+`)
+
+export const PASSWORD_RESET = graphql(`
+	mutation RedeemUserPasswordResetToken(
+		$email: String!
+		$token: String!
+		$password: String!
+	) {
+		redeemUserPasswordResetToken(
+			email: $email
+			token: $token
+			password: $password
+		) {
+			message
+			code
+		}
+	}
+`)

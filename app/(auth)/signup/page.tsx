@@ -1,31 +1,33 @@
 import Link from "next/link"
+import { SignupForm } from "@/components/forms/SignupForm"
 import {
 	Card,
-	CardTitle,
 	CardHeader,
-	CardFooter,
-	CardContent,
+	CardTitle,
 	CardDescription,
+	CardContent,
+	CardFooter,
 } from "@/components/ui/card"
-import { SigninForm } from "@/components/forms/SigninForm"
 
-export default function SigninPage() {
+export default function SignupPage() {
 	return (
 		<Card className="max-w-96 m-auto">
 			<CardHeader>
-				<CardTitle className="capitalize text-center">Welcome back</CardTitle>
+				<CardTitle className="capitalize text-center">Welcome</CardTitle>
 				<CardDescription className="text-center">
-					Sign into your account
+					Create an account
 				</CardDescription>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				<SigninForm />
+				<SignupForm />
 			</CardContent>
 			<CardFooter className="text-sm flex-col gap-2">
 				<p>
-					Don&apos;t have an account? <Link href="/signup">Sign Up</Link>
+					Have an account?{" "}
+					<Link href="/signin" className="capitalize">
+						Sign in
+					</Link>
 				</p>
-				<Link href="/forgot-password">Forgot password?</Link>
 			</CardFooter>
 		</Card>
 	)

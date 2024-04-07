@@ -1,9 +1,20 @@
+import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 
-export default function Container({ children }: { children: ReactNode }) {
+interface ContainerProps {
+	sectionStyles?: string
+	wrapperStyles?: string
+	children: ReactNode
+}
+
+export const Container = ({
+	children,
+	sectionStyles,
+	wrapperStyles,
+}: ContainerProps) => {
 	return (
-		<section className="py-6">
-			<div className="container">{children}</div>
+		<section className={cn("py-6", sectionStyles)}>
+			<div className={cn("container", wrapperStyles)}>{children}</div>
 		</section>
 	)
 }
