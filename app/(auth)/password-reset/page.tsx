@@ -12,13 +12,15 @@ export default function PasswordResetPage({
 		redirect("/forgot-password")
 	}
 
+	const { email, token } = searchParams
+
 	return (
 		<Card className="max-w-96 m-auto">
 			<CardHeader>
 				<CardTitle className="capitalize text-center">Reset Password</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<PasswordResetForm />
+				<PasswordResetForm email={email} token={token} />
 			</CardContent>
 		</Card>
 	)
