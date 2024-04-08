@@ -23,10 +23,7 @@ export default function SignupPage() {
 			</CardContent>
 			<CardFooter className="text-sm flex-col gap-2">
 				<p>
-					Have an account?{" "}
-					<Link href="/signin" className="capitalize">
-						Sign in
-					</Link>
+					Have an account? <Link href="/signin">Sign in</Link>
 				</p>
 			</CardFooter>
 		</Card>

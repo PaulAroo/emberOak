@@ -1,6 +1,8 @@
 "use client"
 
 import * as Z from "zod"
+import Link from "next/link"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useMutation } from "@apollo/client"
@@ -22,6 +24,7 @@ import {
 
 export const SigninForm = () => {
 	const router = useRouter()
+	const [errorMsg, setErrorMsg] = useState("")
 	const formSchema = Z.object({
 		email: Z.string().email({ message: "invalid email address" }),
 		password: Z.string().min(8, {
@@ -37,42 +40,39 @@ export const SigninForm = () => {
 		},
 	})
 
-	const [signin, { loading, data }] = useMutation(USER_SIGN_IN, {
+	const [signin, { loading }] = useMutation(USER_SIGN_IN, {
 		variables: form.getValues(),
 		refetchQueries: [GET_USER_QUERY],
 	})
 
-	let errmsg = ""
-	if (
-		data?.authenticateUserWithPassword?.__typename ===
-		"UserAuthenticationWithPasswordFailure"
-	) {
-		errmsg = data.authenticateUserWithPassword.message
-	}
 	async function onSubmit() {
-		const res = await signin()
-		form.setFocus("email")
-		form.reset()
+		const { data } = await signin()
+		form.resetField("password")
+		form.setFocus("password")
+
 		if (
-			res.data?.authenticateUserWithPassword?.__typename ===
+			data?.authenticateUserWithPassword?.__typename ===
 			"UserAuthenticationWithPasswordSuccess"
 		) {
 			router.replace("/products")
 		}
+		if (
+			data?.authenticateUserWithPassword?.__typename ===
+			"UserAuthenticationWithPasswordFailure"
+		) {
+			setErrorMsg(data.authenticateUserWithPassword.message)
+		}
 	}
+
 	return (
 		<>
-			{!!errmsg && (
+			{!!errorMsg && (
 				<p className="text-red-500 border-l-4 border-l-red-500 pl-4">
-					{errmsg}
+					{errorMsg}
 				</p>
 			)}
 			<Form {...form}>
-				<form
-					onSubmit={form.handleSubmit(onSubmit)}
-					className="space-y-6"
-					id="signin"
-				>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 					<FormField
 						control={form.control}
 						name="email"
@@ -100,15 +100,13 @@ export const SigninForm = () => {
 									<PasswordInput {...field} placeholder="********" />
 								</FormControl>
 								<FormMessage />
+								<div className="text-sm text-right">
+									<Link href="/forgot-password">Forgot password?</Link>
+								</div>
 							</FormItem>
 						)}
 					/>
-					<Button
-						type="submit"
-						className="w-full"
-						form="signin"
-						disabled={loading}
-					>
+					<Button type="submit" className="w-full" disabled={loading}>
 						{loading ? <Icons.spinner /> : "Sign in"}
 					</Button>
 				</form>

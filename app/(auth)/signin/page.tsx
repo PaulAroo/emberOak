@@ -23,9 +23,8 @@ export default function SigninPage() {
 			</CardContent>
 			<CardFooter className="text-sm flex-col gap-2">
 				<p>
-					Don&apos;t have an account? <Link href="/signup">Sign Up</Link>
+					Don&apos;t have an account? <Link href="/signup">Sign up</Link>
 				</p>
-				<Link href="/forgot-password">Forgot password?</Link>
 			</CardFooter>
 		</Card>
 	)
